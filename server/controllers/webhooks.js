@@ -5,7 +5,7 @@ import User from '../models/User.js';
 
 export const clerkWebhooks = async  (req, res)=>{
     try {
-        const whook = new Webhook(proccess.env.CLERK_WEBHOOK_SECRET)
+        const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET)
 
         await whook.verify(JSON.stringify(req.body),{
             "svix-id": req.headers["svix-id"],
@@ -23,7 +23,7 @@ export const clerkWebhooks = async  (req, res)=>{
                     imageUrl: data.image_url,
                 }
                 await User.create(userData)
-                res.json({})
+                res.json({});
                 break;
             }
             case 'user.updated': {
@@ -33,12 +33,12 @@ export const clerkWebhooks = async  (req, res)=>{
                 imageUrl: data.image_url,
             }
             await User.findByIdAndUpdate(data.id, userData)
-            res.json({})
+            res.json({});
             break;
         }
             case 'user.deleted':{
                 await User.findByIdAndDelete(data.id)
-                res.json({})
+                res.json({});
                 break;
             }
         
